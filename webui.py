@@ -53,7 +53,9 @@ edgetts = EdgeTTS()
 @calculate_time
 def Asr(audio):
     try:
+        # 使用 ASR 模块对传入的音频数据进行转写（语音转文本）
         question = asr.transcribe(audio)
+        # 将识别得到的文字转换为简体中文，统一格式
         question = convert(question, 'zh-cn')
     except Exception as e:
         gr.Warning("ASR Error: ", e)
@@ -91,6 +93,24 @@ def change_instruction(mode):
 PROMPT_SR, TARGET_SR = 16000, 22050
 DEFAULT_DATA = np.zeros(TARGET_SR)
 
+# 函数说明：
+# 输入参数：
+# - text: 待合成的文本
+# - voice, rate, volume, pitch: Edge-TTS 的参数
+# - am, voc, lang, male: PaddleTTS 参数
+# - ref_audio, prompt_text: 克隆模型所需的提示内容
+# - question_audio, question: 麦克风音频与转写文本
+# - use_mic_voice: 是否使用麦克风音频
+# - mode_checkbox_group: 当前使用的 TTS 模式（如预训练音色、复刻等）
+# - sft_dropdown, prompt_text_cv, prompt_wav_upload/record: CosyVoice 所需参数
+# - seed, speed_factor: 语速控制与随机种子
+# - tts_method: 当前选用的语音合成模型类型
+# - save_path: 合成音频保存路径
+
+# 功能：根据用户选择的 TTS 模型（Edge-TTS、PaddleTTS、GPT-SoVITS、CosyVoice等）合成语音，
+# 并根据参数控制语音风格、语速、声音来源（复刻或预训练）
+
+# 输出：保存的音频路径或默认空音频（若合成失败）
 @calculate_time
 def TTS_response(text, voice, rate, volume, pitch, am, voc, lang, male,
                 ref_audio, prompt_text, prompt_language, text_language,
