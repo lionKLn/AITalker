@@ -16,6 +16,9 @@ import os
 
 app = FastAPI()
 
+# # 存储生成视频的临时目录
+# OUTPUT_DIR = "generated_videos"
+# os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 @app.post("/generate-video/")
 async def generate_video(text: str):
@@ -49,3 +52,12 @@ async def generate_video(text: str):
             status_code=500, 
             detail=f"视频生成失败: {str(e)}"
         )
+
+@app.post("/generate-text/")
+async def process_text(text: str):
+    try:
+        # 假设 musetalk_response 返回 (视频路径, 处理后的文本)
+        processed_text = musetalkdemo.llm_answer(text)
+        return {"text": processed_text}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"处理失败: {str(e)}")
