@@ -72,11 +72,11 @@ class Qwen2:
         # 清空历史记录
         self.history = []
     
-def test():
+def test(prompt):
     llm = Qwen2(mode='offline', model_path="Qwen/Qwen1.5-0.5B-Chat")
     # llm = Qwen2(mode='offline', model_path="Qwen/Qwen2-0.5B")
-    answer = llm.generate("如何应对压力？")
+    answer = llm.generate(prompt)
     print(answer)
 
 if __name__ == '__main__':
-    test()
+    test("请介绍一下你自己")

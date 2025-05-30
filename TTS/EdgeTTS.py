@@ -198,13 +198,14 @@ class EdgeTTS:
 
         return OUTPUT_FILE, None
 
-def test():
+def test(text):
     tts = EdgeTTS(list_voices=False)
-    TEXT = '''近日，苹果公司起诉高通公司，状告其未按照相关合约进行合作，高通方面尚未回应。这句话中“其”指的是谁？'''
+    #TEXT = '''近日，苹果公司起诉高通公司，状告其未按照相关合约进行合作，高通方面尚未回应。这句话中“其”指的是谁？'''
+    TEXT = text
     VOICE = "zh-CN-XiaoxiaoNeural"
     OUTPUT_FILE, OUTPUT_SUBS = "tts.wav", "tts.vtt"
     audio_file, sub_file = tts.predict(TEXT, VOICE, 0, 0, 0, OUTPUT_FILE, OUTPUT_SUBS)
     print("Audio file written to", audio_file, "and subtitle file written to", sub_file)
 
 if __name__ == "__main__":
-    test()
+    test('''近日，苹果公司起诉高通公司，状告其未按照相关合约进行合作，高通方面尚未回应。这句话中“其”指的是谁？''')
