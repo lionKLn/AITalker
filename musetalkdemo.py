@@ -1,8 +1,13 @@
 from TFG import MuseTalk_RealTime
-from LLM import LLM
+# from LLM import LLM
 from TTS import EdgeTTS 
+from kimi import Kimi
 
-llm = LLM(mode='offline').init_model('Qwen', 'Qwen/Qwen-1_8B-Chat')
+#llm = LLM(mode='offline').init_model('Qwen', 'Qwen/Qwen-1_8B-Chat')
+api_key = "sk-pko435BmmBJLN0mTyl5b2khWEea8b1us2gQFrqQDulhUPzUI"
+llm = Kimi(api_key = api_key)
+answer = llm.generate("你现在是一个面试官，请问面试生成一个简短的开场白")
+print(answer)
 
 try:
     from TFG import MuseTalk_RealTime
@@ -12,7 +17,17 @@ except Exception as e:
     error_print(f"MuseTalk Error: {e}")
     error_print("如果使用MuseTalk，请先下载MuseTalk相关模型")
 print("模型已加载完成")
-                                    
+
+#test.mov
+# 假设 musetalker 是已实例化的类对象
+source_video = "test.mov"
+bbox_shift = 0
+# 调用方法
+result_video_path, bbox_shift_text = musetalker.prepare_material(
+    video_path=source_video,
+    bbox_shift=bbox_shift
+)
+
 def tts_generate(text):
     tts = EdgeTTS(list_voices=False)
     #TEXT = '''测试'''
@@ -35,21 +50,8 @@ def musetalk_response(text):
     #tts.wav
     driven_audio = "./tts.wav"
 
-    #test.mov
-    # 假设 musetalker 是已实例化的类对象
-    source_video = "test.mov"  
-    bbox_shift = 0
-
+      
     
-
-    # 调用方法
-    result_video_path, bbox_shift_text = musetalker.prepare_material(
-        video_path=source_video,
-        bbox_shift=bbox_shift
-    )
-
-   
-
     video = musetalker.inference_noprepare(driven_audio, 
                                             source_video, 
                                             bbox_shift)
